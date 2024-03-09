@@ -4,7 +4,7 @@ using System.Text;
 namespace Leovaria.Extensions.String
 {
     /// <summary>
-    /// Extensions for strings.
+    /// Extensions for <see cref="string"/>.
     /// </summary>
     public static class StringExtensions
     {
