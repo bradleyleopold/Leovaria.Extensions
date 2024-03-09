@@ -20,10 +20,10 @@ namespace Leovaria.Extensions.Common.Tests.Guards
 
         [Theory]
         [InlineData(null)]
-        public void ThrowsArgumentNullExceptionWhenArgumentIsNull(object inputToTest)
+        public void ThrowsArgumentNullExceptionWhenArgumentIsNull(object? inputToTest)
         {
             // Act
-            var action = () => ThisShould.NotBeNull(inputToTest);
+            var action = () => ThisShould.NotBeNull(inputToTest!);
 
             // Assert
             Assert.Throws<ArgumentNullException>(action);
