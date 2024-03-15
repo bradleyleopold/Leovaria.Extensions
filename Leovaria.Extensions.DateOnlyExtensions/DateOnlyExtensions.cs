@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Leovaria.Extensions.DateOnlyExtensions.Enums;
+using System.Globalization;
 
 namespace Leovaria.Extensions.DateOnlyExtensions;
 /// <summary>
@@ -11,6 +12,11 @@ namespace Leovaria.Extensions.DateOnlyExtensions;
 /// </summary>
 public static class DateOnlyExtensions
 {
+    /// <summary>
+    /// Gregorian calendar used in the extension methods.
+    /// </summary>
+    private static GregorianCalendar _gregorianCalendar = new();
+
     /// <summary>
     /// Gets the name of the first day of the month in regards to the
     /// <paramref name="value"/> input.
@@ -37,8 +43,7 @@ public static class DateOnlyExtensions
     /// </returns>
     public static string LastDayOfMonth(this DateOnly value)
     {
-        var calendar = new GregorianCalendar();
-        var lastDateOfMonth = new DateOnly(value.Year, value.Month, calendar.GetDaysInMonth(value.Year, value.Month));
+        var lastDateOfMonth = new DateOnly(value.Year, value.Month, _gregorianCalendar.GetDaysInMonth(value.Year, value.Month));
         return lastDateOfMonth.DayOfWeek.ToString();
     }
 
@@ -126,9 +131,7 @@ public static class DateOnlyExtensions
     /// <returns>True if it is, false if not.</returns>
     public static bool IsLeapDay(this DateOnly value)
     {
-        var calendar = new GregorianCalendar();
-
-        if (calendar.IsLeapDay(value.Year, value.Month, value.Day))
+        if (_gregorianCalendar.IsLeapDay(value.Year, value.Month, value.Day))
         {
             return true;
         }
@@ -148,9 +151,7 @@ public static class DateOnlyExtensions
     /// </returns>
     public static bool IsLeapYear(this DateOnly value)
     {
-        var calendar = new GregorianCalendar();
-
-        if (calendar.IsLeapYear(value.Year))
+        if (_gregorianCalendar.IsLeapYear(value.Year))
         {
             return true;
         }
@@ -285,10 +286,8 @@ public static class DateOnlyExtensions
     public static int WeekNumber(this DateOnly value, CalendarWeekRule calendarWeekRule = CalendarWeekRule.FirstDay, 
         DayOfWeek firstDayOfWeek = DayOfWeek.Sunday)
     {
-        var calendar = new GregorianCalendar();
         var dateTimeEquivalent = value.ToDateTime(TimeOnly.MinValue);
-
-        return calendar.GetWeekOfYear(dateTimeEquivalent, calendarWeekRule, firstDayOfWeek);
+        return _gregorianCalendar.GetWeekOfYear(dateTimeEquivalent, calendarWeekRule, firstDayOfWeek);
     }
 
     /// <summary>
@@ -381,4 +380,112 @@ public static class DateOnlyExtensions
     /// to <paramref name="value"/>.</returns>
     public static int DaysSince(this DateOnly value, int year, int month, int day) =>
         value.DayNumber - new DateOnly(year, month, day).DayNumber;
+
+    /// <summary>
+    /// Denotes whether <paramref name="value"/> is the first date of the month.
+    /// </summary>
+    /// <param name="value">The date to check.</param>
+    /// <returns>True if it is the first date of the month, false otherwise.</returns>
+    public static bool IsFirstDateOfMonth(this DateOnly value) =>
+        new DateOnly(value.Year, value.Month, 01) == value;
+
+    /// <summary>
+    /// Denotes whether <paramref name="value"/> is the last date of the month.
+    /// </summary>
+    /// <param name="value">The date to check.</param>
+    /// <returns>True if it is the last date of the month, false otherwise.</returns>
+    public static bool IsLastDateOfMonth(this DateOnly value)
+    {
+        var daysInMonth = _gregorianCalendar.GetDaysInMonth(value.Year, value.Month);
+        return new DateOnly(value.Year, value.Month, daysInMonth) == value;
+    }
+
+    /// <summary>
+    /// Gets the midpoint date of the year that <paramref name="value"/> resides in.
+    /// </summary>
+    /// <param name="value">The date to get year information from.</param>
+    /// <returns>The middle date of the year.</returns>
+    public static DateOnly YearMidpointDate(this DateOnly value)
+    {
+        var yearTotalDays = _gregorianCalendar.GetDaysInYear(value.Year);
+        return DateOnly.FromDayNumber(yearTotalDays / 2);
+    }
+
+    /// <summary>
+    /// Gets the DayNumber of the date that is in the precise middle of the year.
+    /// </summary>
+    /// <param name="value">The date to get year information from.</param>
+    /// <returns>The DayNumber of the year's midpoint date.</returns>
+    public static int YearMidPointDayNumber(this DateOnly value) =>
+        YearMidpointDate(value).DayNumber;
+
+    /// <summary>
+    /// Denotes if <paramref name="value"/> is in the first half of the year.
+    /// </summary>
+    /// <param name="value">The date to check.</param>
+    /// <returns>True if the date is in the first half of the year, false otherwise.</returns>
+    public static bool IsInFirstHalfOfYear(this DateOnly value) =>
+        value <= YearMidpointDate(value);
+
+    /// <summary>
+    /// Denotes if <paramref name="value"/> is in the second half of the year.
+    /// </summary>
+    /// <param name="value">The date to check.</param>
+    /// <returns>True if the date is in the second half of the year, false otherwise.</returns>
+    public static bool IsInSecondHalfOfYear(this DateOnly value) =>
+        value >= YearMidpointDate(value);
+
+    /// <summary>
+    /// Denotes if <paramref name="value"/> is the date in the center of the year.
+    /// </summary>
+    /// <param name="value">The date to check.</param>
+    /// <returns>True if the date is the midpoint date of the year, false otherwise.</returns>
+    public static bool IsYearMidpointDate(this DateOnly value) =>
+        value == YearMidpointDate(value);
+
+    /// <summary>
+    /// Gets which quarter <paramref name="value"/> resides within the year.
+    /// </summary>
+    /// <param name="value">The date to check which quarter it's in.</param>
+    /// <returns>First, Second, Third, or Fourth quarter.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown if a faulty date is provided.
+    /// </exception>
+    public static Quarter GetQuarter(this DateOnly value)
+    {
+        return value.Month switch
+        {
+            1 or 2 or 3 => Quarter.First,
+            4 or 5 or 6 => Quarter.Second,
+            7 or 8 or 9 => Quarter.Third,
+            10 or 11 or 12 => Quarter.Fourth,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), $"Unexpected date: {value}")
+        };
+    }
+
+    /// <summary>
+    /// Denotes if <paramref name="value"/> resides within the <paramref name="quarter"/>
+    /// part of the year.
+    /// </summary>
+    /// <param name="value">The date to check.</param>
+    /// <param name="quarter">Which quarter to check and see if the date resides in.</param>
+    /// <returns>
+    /// True if <paramref name="value"/> resides within 
+    /// <paramref name="quarter"/>, false otherwise.
+    /// </returns>
+    public static bool IsInQuarter(this DateOnly value, Quarter quarter) =>
+        value.GetQuarter() == quarter;
+
+    /// <summary>
+    /// Adds the amount of weeks to the provided <paramref name="value"/>, where
+    /// a week represents seven days.
+    /// </summary>
+    /// <param name="value">The date to add weeks to.</param>
+    /// <param name="weeks">How many weeks to add.</param>
+    /// <returns>
+    /// New instance of <see cref="DateOnly"/> that is generated after adding 
+    /// <paramref name="weeks"/> to <paramref name="value"/>.
+    /// </returns>
+    public static DateOnly AddWeeks(this DateOnly value, int weeks) =>
+        value.AddDays(weeks * 7);
 }
