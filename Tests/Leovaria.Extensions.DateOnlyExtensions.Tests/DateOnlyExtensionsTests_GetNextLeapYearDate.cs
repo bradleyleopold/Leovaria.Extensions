@@ -10,30 +10,17 @@
             Assert.Equal(expectedResult, result);
         }
 
-        public static IEnumerable<object[]> GetsExpectedResult_TestData()
+        public static TheoryData<DateOnly, DateOnly> GetsExpectedResult_TestData()
         {
-            yield return new object[]
+            return new TheoryData<DateOnly, DateOnly>
             {
-                new DateOnly(2024, 03, 09),
-                new DateOnly(2028, 02, 29)
-            };
-
-            yield return new object[]
-            {
-                new DateOnly(2024, 02, 29),
-                new DateOnly(2028, 02, 29)
-            };
-
-            yield return new object[]
-            {
-                new DateOnly(2024, 02, 28),
-                new DateOnly(2024, 02, 29)
-            };
-
-            yield return new object[]
-            {
-                new DateOnly(2024, 01, 01),
-                new DateOnly(2024, 02, 29)
+                { new DateOnly(2024, 03, 09), new DateOnly(2028, 02, 29) },
+                { new DateOnly(2024, 02, 29), new DateOnly(2028, 02, 29) },
+                { new DateOnly(2024, 02, 28), new DateOnly(2024, 02, 29) },
+                { new DateOnly(2024, 01, 01), new DateOnly(2024, 02, 29) },
+                { new DateOnly(2019, 01, 01), new DateOnly(2020, 02, 29) },
+                { new DateOnly(2014, 04, 20), new DateOnly(2016, 02, 29) },
+                { new DateOnly(2012, 02, 28), new DateOnly(2012, 02, 29) },
             };
         }
     }
