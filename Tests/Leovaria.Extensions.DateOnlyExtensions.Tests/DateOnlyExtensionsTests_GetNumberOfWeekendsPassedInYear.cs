@@ -16,6 +16,7 @@
             {
                 { new DateOnly(2024, 01, 01), 0},
                 { new DateOnly(2024, 01, 08), 1},
+                { new DateOnly(2024, 12, 31), 52},
             };
         }
     }

@@ -129,15 +129,8 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">DateOnly to check.</param>
     /// <returns>True if it is, false if not.</returns>
-    public static bool IsLeapDay(this DateOnly value)
-    {
-        if (_gregorianCalendar.IsLeapDay(value.Year, value.Month, value.Day))
-        {
-            return true;
-        }
-
-        return false;
-    }
+    public static bool IsLeapDay(this DateOnly value) =>
+        _gregorianCalendar.IsLeapDay(value.Year, value.Month, value.Day);
 
     /// <summary>
     /// Denotes whether the <paramref name="value"/> date
@@ -149,15 +142,8 @@ public static class DateOnlyExtensions
     /// True if <paramref name="value"/> is within a 
     /// leap year, false if not.
     /// </returns>
-    public static bool IsInLeapYear(this DateOnly value)
-    {
-        if (_gregorianCalendar.IsLeapYear(value.Year))
-        {
-            return true;
-        }
-
-        return false;
-    }
+    public static bool IsInLeapYear(this DateOnly value) => 
+        _gregorianCalendar.IsLeapYear(value.Year);
 
     /// <summary>
     /// Provides the amount of day(s) until the next leap day occurrence.
