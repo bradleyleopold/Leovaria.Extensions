@@ -4,9 +4,7 @@
 name: NuGetPublish
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
+  release:
     branches: [ "main" ]
 
 jobs:
@@ -28,7 +26,5 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Pack
       run: dotnet pack Leovaria.Extensions.DateOnlyExtensions/Leovaria.Extensions.DateOnlyExtensions.csproj -c Release
-    - name: Package
-      run: dotnet nuget add source --username bradleyleopold --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/bradleyleopold/index.json"
     - name: Publish 
-      run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}  --source "github"
+      run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*.nupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json
