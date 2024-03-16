@@ -18,6 +18,14 @@ public static class DateOnlyExtensions
     private static GregorianCalendar _gregorianCalendar = new();
 
     /// <summary>
+    /// Gets the first date of the month that <paramref name="value"/> resides in.
+    /// </summary>
+    /// <param name="value">The date to calculate the first of the month from.</param>
+    /// <returns>The first date of the month (i.e., March 1st 2024.)</returns>
+    public static DateOnly GetFirstDateOfMonth(this DateOnly value) =>
+        new DateOnly(value.Year, value.Month, 1);
+
+    /// <summary>
     /// Gets the name of the first day of the month in regards to the
     /// <paramref name="value"/> input.
     /// </summary>
@@ -26,11 +34,16 @@ public static class DateOnlyExtensions
     /// The name of the day at the beginning of the month
     /// (i.e., Monday, Tuesday, etc.)
     /// </returns>
-    public static string GetFirstDayOfMonth(this DateOnly value)
-    {
-        var firstDate = new DateOnly(value.Year, value.Month, 1);
-        return firstDate.DayOfWeek.ToString();
-    }
+    public static string GetFirstDayOfMonth(this DateOnly value) =>
+        GetFirstDateOfMonth(value).DayOfWeek.ToString();
+
+    /// <summary>
+    /// Gets the last date of the month that <paramref name="value"/> resides in.
+    /// </summary>
+    /// <param name="value">The date to calculate the last of the month from.</param>
+    /// <returns>The last date of the month (i.e., March 31st 2024.)</returns>
+    public static DateOnly GetLastDateOfMonth(this DateOnly value) =>
+        new DateOnly(value.Year, value.Month, _gregorianCalendar.GetDaysInMonth(value.Year, value.Month));
 
     /// <summary>
     /// Gets the name of the last day of the month in regards to the
@@ -41,11 +54,8 @@ public static class DateOnlyExtensions
     /// The name of the day at the end of the month
     /// (i.e., Monday, Tuesday, etc.)
     /// </returns>
-    public static string GetLastDayOfMonth(this DateOnly value)
-    {
-        var lastDateOfMonth = new DateOnly(value.Year, value.Month, _gregorianCalendar.GetDaysInMonth(value.Year, value.Month));
-        return lastDateOfMonth.DayOfWeek.ToString();
-    }
+    public static string GetLastDayOfMonth(this DateOnly value) =>
+        GetLastDateOfMonth(value).DayOfWeek.ToString();
 
     /// <summary>
     /// Gets the name of the first day of the year relative to the
@@ -478,4 +488,92 @@ public static class DateOnlyExtensions
     /// </returns>
     public static DateOnly AddFortnights(this DateOnly value, int fortnights) =>
         value.AddWeeks(fortnights * 2);
+
+    /// <summary>
+    /// Gets the first weekday date of the month that <paramref name="value"/> resides in.
+    /// </summary>
+    /// <param name="value">The date to start calculation from.</param>
+    /// <returns>
+    /// <see cref="DateOnly"/> of the first weekday date of the
+    /// month <paramref name="value"/> resides in.
+    /// </returns>
+    public static DateOnly GetFirstWeekDateOfMonth(this DateOnly value)
+    {
+        var loopDate = GetFirstDateOfMonth(value);
+
+        while (!loopDate.IsWeekDay())
+        {
+            loopDate = loopDate.AddDays(1);
+        }
+
+        return loopDate;
+    }
+
+    /// <summary>
+    /// Gets the first weekend date of the month that <paramref name="value"/> resides in.
+    /// </summary>
+    /// <param name="value">The date to start calculation from.</param>
+    /// <returns>
+    /// <see cref="DateOnly"/> of the first weekend date of the
+    /// month <paramref name="value"/> resides in.
+    /// </returns>
+    public static DateOnly GetFirstWeekendDateOfMonth(this DateOnly value)
+    {
+        var loopDate = GetFirstDateOfMonth(value);
+
+        while (!loopDate.IsWeekendDay())
+        {
+            loopDate = loopDate.AddDays(1);
+        }
+
+        return loopDate;
+    }
+
+    /// <summary>
+    /// Gets the last weekday date of the month that <paramref name="value"/> resides in.
+    /// </summary>
+    /// <param name="value">The date to start calculation from.</param>
+    /// <returns>
+    /// <see cref="DateOnly"/> of the last weekday date of the
+    /// month <paramref name="value"/> resides in.
+    /// </returns>
+    public static DateOnly GetLastWeekDateOfMonth(this DateOnly value)
+    {
+        var loopDate = GetLastDateOfMonth(value);
+
+        while (!loopDate.IsWeekDay())
+        {
+            loopDate = loopDate.AddDays(-1);
+        }
+
+        return loopDate;
+    }
+
+    /// <summary>
+    /// Gets the last weekend date of the month that <paramref name="value"/> resides in.
+    /// </summary>
+    /// <param name="value">The date to start calculation from.</param>
+    /// <returns>
+    /// <see cref="DateOnly"/> of the last weekend date of the
+    /// month <paramref name="value"/> resides in.
+    /// </returns>
+    public static DateOnly GetLastWeekendDateOfMonth(this DateOnly value)
+    {
+        var loopDate = GetLastDateOfMonth(value);
+
+        while (!loopDate.IsWeekendDay())
+        {
+            loopDate = loopDate.AddDays(-1);
+        }
+
+        return loopDate;
+    }
+
+    /// <summary>
+    /// Denotes whether <paramref name="value"/> is a hump day (Wednesday, middle of the week.)
+    /// </summary>
+    /// <param name="value">The date to check.</param>
+    /// <returns>True if <paramref name="value"/> is a hump day, false otherwise.</returns>
+    public static bool IsHumpDay(this DateOnly value) =>
+        value.DayOfWeek is DayOfWeek.Wednesday;
 }
