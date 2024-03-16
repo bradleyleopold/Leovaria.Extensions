@@ -1,12 +1,12 @@
 ﻿namespace Leovaria.Extensions.DateOnlyExtensions.Tests
 {
-    public sealed class DateOnlyExtensionsTests_DaysSince_DateTime
+    public sealed class DateOnlyExtensionsTests_GetDaysSince_DateTime
     {
         [Theory]
         [MemberData(nameof(GetsExpectedResult_TestData))]
         public void GetsExpectedResult(DateOnly dateOnly, DateTime sinceDate, int expectedResult)
         {
-            var result = dateOnly.DaysSince(sinceDate);
+            var result = dateOnly.GetDaysSince(sinceDate);
             Assert.Equal(expectedResult, result);
         }
 

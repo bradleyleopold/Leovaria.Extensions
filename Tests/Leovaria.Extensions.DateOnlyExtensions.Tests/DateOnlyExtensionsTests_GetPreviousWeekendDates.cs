@@ -1,12 +1,12 @@
 ﻿namespace Leovaria.Extensions.DateOnlyExtensions.Tests
 {
-    public sealed class DateOnlyExtensionsTests_NextWeekendDates
+    public sealed class DateOnlyExtensionsTests_GetPreviousWeekendDates
     {
         [Theory]
         [MemberData(nameof(GetsExpectedResult_TestData))]
         public void GetsExpectedResult(DateOnly dateOnly, List<DateOnly> expectedResult)
         {
-            var result = dateOnly.NextWeekendDates();
+            var result = dateOnly.GetPreviousWeekendDates();
             Assert.Equal(expectedResult, result);
         }
 
@@ -14,8 +14,9 @@
         {
             return new TheoryData<DateOnly, List<DateOnly>>
             {
-                { new DateOnly(2024, 03, 01), [new DateOnly(2024, 03, 02), new DateOnly(2024, 03, 03)] },
-                { new DateOnly(2024, 03, 02), [new DateOnly(2024, 03, 09), new DateOnly(2024, 03, 10)] },
+                { new DateOnly(2024, 03, 01), [new DateOnly(2024, 02, 24), new DateOnly(2024, 02, 25)] },
+                { new DateOnly(2024, 03, 02), [new DateOnly(2024, 02, 24), new DateOnly(2024, 02, 25)] },
+                { new DateOnly(2024, 03, 11), [new DateOnly(2024, 03, 09), new DateOnly(2024, 03, 10)] },
             };
         }
     }

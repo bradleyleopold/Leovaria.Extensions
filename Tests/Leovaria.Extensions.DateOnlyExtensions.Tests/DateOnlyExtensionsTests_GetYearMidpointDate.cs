@@ -1,12 +1,12 @@
 ﻿namespace Leovaria.Extensions.DateOnlyExtensions.Tests
 {
-    public sealed class DateOnlyExtensionsTests_YearMidpointDate
+    public sealed class DateOnlyExtensionsTests_GetYearMidpointDate
     {
         [Theory]
         [MemberData(nameof(GetsExpectedResult_TestData))]
         public void GetsExpectedResult(DateOnly dateOnly, DateOnly expectedResult)
         {
-            var result = dateOnly.YearMidpointDate();
+            var result = dateOnly.GetYearMidpointDate();
             Assert.Equal(expectedResult, result);
         }
 

@@ -26,7 +26,7 @@ public static class DateOnlyExtensions
     /// The name of the day at the beginning of the month
     /// (i.e., Monday, Tuesday, etc.)
     /// </returns>
-    public static string FirstDayOfMonth(this DateOnly value)
+    public static string GetFirstDayOfMonth(this DateOnly value)
     {
         var firstDate = new DateOnly(value.Year, value.Month, 1);
         return firstDate.DayOfWeek.ToString();
@@ -41,7 +41,7 @@ public static class DateOnlyExtensions
     /// The name of the day at the end of the month
     /// (i.e., Monday, Tuesday, etc.)
     /// </returns>
-    public static string LastDayOfMonth(this DateOnly value)
+    public static string GetLastDayOfMonth(this DateOnly value)
     {
         var lastDateOfMonth = new DateOnly(value.Year, value.Month, _gregorianCalendar.GetDaysInMonth(value.Year, value.Month));
         return lastDateOfMonth.DayOfWeek.ToString();
@@ -56,7 +56,7 @@ public static class DateOnlyExtensions
     /// The name of the day at the first of year.
     /// (i.e., Monday, Tuesday, etc.)
     /// </returns>
-    public static string FirstDayOfYear(this DateOnly value)
+    public static string GetFirstDayOfYear(this DateOnly value)
     {
         var firstDateOfYear = new DateOnly(value.Year, 1, 1);
         return firstDateOfYear.DayOfWeek.ToString();
@@ -71,7 +71,7 @@ public static class DateOnlyExtensions
     /// The name of the day at the end of year.
     /// (i.e., Monday, Tuesday, etc.)
     /// </returns>
-    public static string LastDayOfYear(this DateOnly value)
+    public static string GetLastDayOfYear(this DateOnly value)
     {
         var lastDateOfYear = new DateOnly(value.Year, 12, 31);
         return lastDateOfYear.DayOfWeek.ToString();
@@ -83,7 +83,7 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">Date to get the relative previous leap date of.</param>
     /// <returns>The last leap year date that occurred prior to <paramref name="value"/>.</returns>
-    public static DateOnly PreviousLeapYearDate(this DateOnly value)
+    public static DateOnly GetPreviousLeapYearDate(this DateOnly value)
     {
         var loopDate = value;
 
@@ -92,7 +92,7 @@ public static class DateOnlyExtensions
             loopDate = new DateOnly(value.Year - 1, 12, 31);
         }
 
-        while (!loopDate.IsLeapYear())
+        while (!loopDate.IsInLeapYear())
         {
             loopDate = loopDate.AddYears(-1);
         }
@@ -106,7 +106,7 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">Date to get the relative next leap date of.</param>
     /// <returns>The next leap year date relative to <paramref name="value"/>.</returns>
-    public static DateOnly NextLeapYearDate(this DateOnly value)
+    public static DateOnly GetNextLeapYearDate(this DateOnly value)
     {
         var loopDate = value;
 
@@ -115,7 +115,7 @@ public static class DateOnlyExtensions
             loopDate = new DateOnly(value.Year + 1, 12, 31);
         }
 
-        while (!loopDate.IsLeapYear())
+        while (!loopDate.IsInLeapYear())
         {
             loopDate = loopDate.AddYears(1);
         }
@@ -149,7 +149,7 @@ public static class DateOnlyExtensions
     /// True if <paramref name="value"/> is within a 
     /// leap year, false if not.
     /// </returns>
-    public static bool IsLeapYear(this DateOnly value)
+    public static bool IsInLeapYear(this DateOnly value)
     {
         if (_gregorianCalendar.IsLeapYear(value.Year))
         {
@@ -164,9 +164,9 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">DateOnly to calculate the next leap day amount from.</param>
     /// <returns>The number of days until the next leap day.</returns>
-    public static int DaysUntilNextLeapDay(this DateOnly value)
+    public static int GetDaysUntilNextLeapDay(this DateOnly value)
     {
-        var nextLeapYearDate = value.NextLeapYearDate();
+        var nextLeapYearDate = value.GetNextLeapYearDate();
         return nextLeapYearDate.DayNumber - value.DayNumber;
     }
 
@@ -175,9 +175,9 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">DateOnly to calculate the previous leap day amount from.</param>
     /// <returns>The number of days that has passed since last leap day.</returns>
-    public static int DaysSinceLastLeapDay(this DateOnly value)
+    public static int GetDaysSinceLastLeapDay(this DateOnly value)
     {
-        var previousLeapYearDate = value.PreviousLeapYearDate();
+        var previousLeapYearDate = value.GetPreviousLeapYearDate();
         return value.DayNumber - previousLeapYearDate.DayNumber;
     }
 
@@ -201,7 +201,7 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">DateOnly to check against.</param>
     /// <returns>List of DateOnly of the next weekend dates.</returns>
-    public static List<DateOnly> NextWeekendDates(this DateOnly value)
+    public static List<DateOnly> GetNextWeekendDates(this DateOnly value)
     {
         var loopDate = value;
 
@@ -219,7 +219,7 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">DateOnly to check against.</param>
     /// <returns>List of DateOnly of the prior weekend dates.</returns>
-    public static List<DateOnly> PreviousWeekendDates(this DateOnly value)
+    public static List<DateOnly> GetPreviousWeekendDates(this DateOnly value)
     {
         var loopDate = value;
 
@@ -237,14 +237,14 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">DateOnly date used to start calcuation from.</param>
     /// <returns>Number of weekends left in the year.</returns>
-    public static int WeekendsLeftInYear(this DateOnly value)
+    public static int GetNumberOfWeekendsLeftInYear(this DateOnly value)
     {
         var loopDate = value;
         var weekends = 0;
 
         do
         {
-            loopDate = loopDate.NextWeekendDates()[0];
+            loopDate = loopDate.GetNextWeekendDates()[0];
             weekends++;
         }
         while (loopDate < new DateOnly(value.Year + 1, 1, 1));
@@ -257,14 +257,14 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">DateOnly date used to start calcuation from.</param>
     /// <returns>Number of weekends passed in the year.</returns>
-    public static int WeekendsPassedInYear(this DateOnly value)
+    public static int GetNumberOfWeekendsPassedInYear(this DateOnly value)
     {
         var loopDate = value;
         var weekends = 0;
 
         do
         {
-            loopDate = loopDate.PreviousWeekendDates()[1];
+            loopDate = loopDate.GetPreviousWeekendDates()[1];
 
             if (loopDate.Year == value.Year)
             {
@@ -283,7 +283,7 @@ public static class DateOnlyExtensions
     /// <param name="calendarWeekRule">How to determine first week of the year.</param>
     /// <param name="firstDayOfWeek">Which day is the start of the week.</param>
     /// <returns>The number of the week relative to <paramref name="value"/> date.</returns>
-    public static int WeekNumber(this DateOnly value, CalendarWeekRule calendarWeekRule = CalendarWeekRule.FirstDay, 
+    public static int GetWeekNumber(this DateOnly value, CalendarWeekRule calendarWeekRule = CalendarWeekRule.FirstDay, 
         DayOfWeek firstDayOfWeek = DayOfWeek.Sunday)
     {
         var dateTimeEquivalent = value.ToDateTime(TimeOnly.MinValue);
@@ -296,7 +296,7 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">Date to start calculation from.</param>
     /// <returns>Days until the first day of the next month.</returns>
-    public static int DaysUntilNextMonth(this DateOnly value)
+    public static int GetDaysUntilNextMonth(this DateOnly value)
     {
         var valuePlusOneMonth = value.AddMonths(1);
         var nextMonthFirstDate = new DateOnly(valuePlusOneMonth.Year, valuePlusOneMonth.Month, 1);
@@ -309,7 +309,7 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">Date to start calculation from.</param>
     /// <returns>Days until the first of the next year.</returns>
-    public static int DaysUntilNextYear(this DateOnly value)
+    public static int GetDaysUntilNextYear(this DateOnly value)
     {
         var nextYearFirstDate = new DateOnly(value.Year + 1, 1, 1);
         return nextYearFirstDate.DayNumber - value.DayNumber;
@@ -322,7 +322,7 @@ public static class DateOnlyExtensions
     /// <param name="value">Date to start calculation from.</param>
     /// <param name="untilDate">Date to stop calculation on.</param>
     /// <returns>Days from <paramref name="value"/> until <paramref name="untilDate"/>.</returns>
-    public static int DaysUntil(this DateOnly value, DateOnly untilDate) =>
+    public static int GetDaysUntil(this DateOnly value, DateOnly untilDate) =>
         untilDate.DayNumber - value.DayNumber;
 
     /// <summary>
@@ -332,7 +332,7 @@ public static class DateOnlyExtensions
     /// <param name="value">Date to start calculation from.</param>
     /// <param name="untilDate">Date to stop calculation on.</param>
     /// <returns>Days from <paramref name="value"/> until <paramref name="untilDate"/>.</returns>
-    public static int DaysUntil(this DateOnly value, DateTime untilDate) => 
+    public static int GetDaysUntil(this DateOnly value, DateTime untilDate) => 
         DateOnly.FromDateTime(untilDate).DayNumber - value.DayNumber;
 
     /// <summary>
@@ -344,7 +344,7 @@ public static class DateOnlyExtensions
     /// <param name="month">Specified month.</param>
     /// <param name="day">Specified day.</param>
     /// <returns>Days from <paramref name="value"/> until <paramref name="year"/>/<paramref name="month"/>/<paramref name="day"/>.</returns>
-    public static int DaysUntil(this DateOnly value, int year, int month, int day) =>
+    public static int GetDaysUntil(this DateOnly value, int year, int month, int day) =>
         new DateOnly(year, month, day).DayNumber - value.DayNumber;
 
     /// <summary>
@@ -354,7 +354,7 @@ public static class DateOnlyExtensions
     /// <param name="value">Date to end calculation to.</param>
     /// <param name="sinceDate">Date to start calculation from.</param>
     /// <returns>Amount of days since <paramref name="sinceDate"/> to <paramref name="value"/>.</returns>
-    public static int DaysSince(this DateOnly value, DateOnly sinceDate) =>
+    public static int GetDaysSince(this DateOnly value, DateOnly sinceDate) =>
         value.DayNumber - sinceDate.DayNumber;
 
     /// <summary>
@@ -364,7 +364,7 @@ public static class DateOnlyExtensions
     /// <param name="value">Date to end calculation to.</param>
     /// <param name="sinceDate">Date to start calculation from.</param>
     /// <returns>Amount of days since <paramref name="sinceDate"/> to <paramref name="value"/>.</returns>
-    public static int DaysSince(this DateOnly value, DateTime sinceDate) =>
+    public static int GetDaysSince(this DateOnly value, DateTime sinceDate) =>
         value.DayNumber - DateOnly.FromDateTime(sinceDate).DayNumber;
 
     /// <summary>
@@ -378,7 +378,7 @@ public static class DateOnlyExtensions
     /// <param name="day">Specified day.</param>
     /// <returns>Amount of days since <paramref name="year"/>/<paramref name="month"/>/<paramref name="day"/>
     /// to <paramref name="value"/>.</returns>
-    public static int DaysSince(this DateOnly value, int year, int month, int day) =>
+    public static int GetDaysSince(this DateOnly value, int year, int month, int day) =>
         value.DayNumber - new DateOnly(year, month, day).DayNumber;
 
     /// <summary>
@@ -405,8 +405,8 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">The date to get year information from.</param>
     /// <returns>The middle date of the year.</returns>
-    public static DateOnly YearMidpointDate(this DateOnly value) =>
-        value.IsLeapYear()
+    public static DateOnly GetYearMidpointDate(this DateOnly value) =>
+        value.IsInLeapYear()
             ? new DateOnly(value.Year, 07, 02)
             : new DateOnly(value.Year, 07, 01);
 
@@ -416,7 +416,7 @@ public static class DateOnlyExtensions
     /// <param name="value">The date to check.</param>
     /// <returns>True if the date is in the first half of the year, false otherwise.</returns>
     public static bool IsInFirstHalfOfYear(this DateOnly value) =>
-        value <= YearMidpointDate(value);
+        value <= GetYearMidpointDate(value);
 
     /// <summary>
     /// Denotes if <paramref name="value"/> is in the last half of the year.
@@ -424,7 +424,7 @@ public static class DateOnlyExtensions
     /// <param name="value">The date to check.</param>
     /// <returns>True if the date is in the last half of the year, false otherwise.</returns>
     public static bool IsInLastHalfOfYear(this DateOnly value) =>
-        value >= YearMidpointDate(value);
+        value >= GetYearMidpointDate(value);
 
     /// <summary>
     /// Denotes if <paramref name="value"/> is the date in the center of the year.
@@ -432,7 +432,7 @@ public static class DateOnlyExtensions
     /// <param name="value">The date to check.</param>
     /// <returns>True if the date is the midpoint date of the year, false otherwise.</returns>
     public static bool IsYearMidpointDate(this DateOnly value) =>
-        value == YearMidpointDate(value);
+        value == GetYearMidpointDate(value);
 
     /// <summary>
     /// Gets which quarter <paramref name="value"/> resides within the year.

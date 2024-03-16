@@ -6,7 +6,7 @@
         [MemberData(nameof(GetsExpectedResult_TestData))]
         public void GetsExpectedResult(DateOnly dateOnly, int expectedResult)
         {
-            var result = dateOnly.WeekNumber();
+            var result = dateOnly.GetWeekNumber();
             Assert.Equal(expectedResult, result);
         }
 
