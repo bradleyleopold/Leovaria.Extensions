@@ -5,6 +5,7 @@ name: NuGetPublish
 
 on:
   release:
+    types: [published]
     branches: [ "main" ]
 
 jobs:
