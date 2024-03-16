@@ -405,19 +405,10 @@ public static class DateOnlyExtensions
     /// </summary>
     /// <param name="value">The date to get year information from.</param>
     /// <returns>The middle date of the year.</returns>
-    public static DateOnly YearMidpointDate(this DateOnly value)
-    {
-        var yearTotalDays = _gregorianCalendar.GetDaysInYear(value.Year);
-        return DateOnly.FromDayNumber(yearTotalDays / 2);
-    }
-
-    /// <summary>
-    /// Gets the DayNumber of the date that is in the precise middle of the year.
-    /// </summary>
-    /// <param name="value">The date to get year information from.</param>
-    /// <returns>The DayNumber of the year's midpoint date.</returns>
-    public static int YearMidPointDayNumber(this DateOnly value) =>
-        YearMidpointDate(value).DayNumber;
+    public static DateOnly YearMidpointDate(this DateOnly value) =>
+        value.IsLeapYear()
+            ? new DateOnly(value.Year, 07, 02)
+            : new DateOnly(value.Year, 07, 01);
 
     /// <summary>
     /// Denotes if <paramref name="value"/> is in the first half of the year.
@@ -428,11 +419,11 @@ public static class DateOnlyExtensions
         value <= YearMidpointDate(value);
 
     /// <summary>
-    /// Denotes if <paramref name="value"/> is in the second half of the year.
+    /// Denotes if <paramref name="value"/> is in the last half of the year.
     /// </summary>
     /// <param name="value">The date to check.</param>
-    /// <returns>True if the date is in the second half of the year, false otherwise.</returns>
-    public static bool IsInSecondHalfOfYear(this DateOnly value) =>
+    /// <returns>True if the date is in the last half of the year, false otherwise.</returns>
+    public static bool IsInLastHalfOfYear(this DateOnly value) =>
         value >= YearMidpointDate(value);
 
     /// <summary>
@@ -478,7 +469,7 @@ public static class DateOnlyExtensions
 
     /// <summary>
     /// Adds the amount of weeks to the provided <paramref name="value"/>, where
-    /// a week represents seven days.
+    /// one week represents seven days.
     /// </summary>
     /// <param name="value">The date to add weeks to.</param>
     /// <param name="weeks">How many weeks to add.</param>
@@ -488,4 +479,17 @@ public static class DateOnlyExtensions
     /// </returns>
     public static DateOnly AddWeeks(this DateOnly value, int weeks) =>
         value.AddDays(weeks * 7);
+
+    /// <summary>
+    /// Adds the amount of fortnights to the provided <paramref name="value"/>, where
+    /// one fortnight represents fourteen days (two weeks.)
+    /// </summary>
+    /// <param name="value">The date to add fortnights to.</param>
+    /// <param name="fortnights">How many fortnights to add.</param>
+    /// <returns>
+    /// New instance of <see cref="DateOnly"/> that is generated after adding 
+    /// <paramref name="fortnights"/> to <paramref name="value"/>.
+    /// </returns>
+    public static DateOnly AddFortnights(this DateOnly value, int fortnights) =>
+        value.AddWeeks(fortnights * 2);
 }
