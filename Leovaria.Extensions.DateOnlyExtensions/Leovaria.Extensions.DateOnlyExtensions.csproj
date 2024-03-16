@@ -4,6 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Authors>Bradley Leopold</Authors>
+    <PackageDescription>
+      Package for extending the DateOnly struct capabilities in .NET. Adds a comprehensive
+      amount of methods to the object to make working with complex date logic
+      much easier.
+    </PackageDescription>
+    <RepositoryUrl>https://github.com/bradleyleopold/Leovaria.Extensions</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
