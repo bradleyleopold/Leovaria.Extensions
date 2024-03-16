@@ -1,12 +1,12 @@
 ﻿namespace Leovaria.Extensions.DateOnlyExtensions.Tests
 {
-    public sealed class DateOnlyExtensionsTests_DaysUntilNextYear
+    public sealed class DateOnlyExtensionsTests_GetDaysSinceLastLeapDay
     {
         [Theory]
         [MemberData(nameof(GetsExpectedResult_TestData))]
         public void GetsExpectedResult(DateOnly dateOnly, int expectedResult)
         {
-            var result = dateOnly.DaysUntilNextYear();
+            var result = dateOnly.GetDaysSinceLastLeapDay();
             Assert.Equal(expectedResult, result);
         }
 
@@ -14,9 +14,10 @@
         {
             return new TheoryData<DateOnly, int>
             {
-                { new DateOnly(2024, 01, 01), 366 },
-                { new DateOnly(2024, 02, 01), 335 },
-                { new DateOnly(2024, 12, 31), 1 },
+                { new DateOnly(2024, 03, 01), 1 },
+                { new DateOnly(2024, 02, 29), 1461 },
+                { new DateOnly(2024, 02, 28), 1460 },
+                { new DateOnly(2024, 02, 27), 1459 }
             };
         }
     }

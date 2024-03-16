@@ -1,12 +1,12 @@
 ﻿namespace Leovaria.Extensions.DateOnlyExtensions.Tests
 {
-    public sealed class DateOnlyExtensionsTests_IsLeapYear
+    public sealed class DateOnlyExtensionsTests_IsInLeapYear
     {
         [Theory]
         [MemberData(nameof(GetsExpectedResult_TestData))]
         public void GetsExpectedResult(DateOnly dateOnly, bool expectedResult)
         {
-            var result = dateOnly.IsLeapYear();
+            var result = dateOnly.IsInLeapYear();
             Assert.Equal(expectedResult, result);
         }
 

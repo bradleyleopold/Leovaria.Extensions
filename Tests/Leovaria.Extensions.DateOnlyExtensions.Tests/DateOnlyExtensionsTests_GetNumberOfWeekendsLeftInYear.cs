@@ -1,12 +1,12 @@
 ﻿namespace Leovaria.Extensions.DateOnlyExtensions.Tests
 {
-    public sealed class DateOnlyExtensionsTests_WeekendsPassedInYear
+    public sealed class DateOnlyExtensionsTests_GetNumberOFWeekendsLeftInYear
     {
         [Theory]
         [MemberData(nameof(GetsExpectedResult_TestData))]
         public void GetsExpectedResult(DateOnly dateOnly, int expectedResult)
         {
-            var result = dateOnly.WeekendsPassedInYear();
+            var result = dateOnly.GetNumberOfWeekendsLeftInYear();
             Assert.Equal(expectedResult, result);
         }
 
@@ -14,8 +14,7 @@
         {
             return new TheoryData<DateOnly, int>
             {
-                { new DateOnly(2024, 01, 01), 0},
-                { new DateOnly(2024, 01, 08), 1},
+                { new DateOnly(2024, 03, 01), 45},
             };
         }
     }
