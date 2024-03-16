@@ -1,4 +1,4 @@
-﻿using Leovaria.Extensions.String.Guards;
+﻿using Leovaria.Extensions.Common.Guards;
 
 namespace Leovaria.Extensions.Common.Tests.Guards
 {
