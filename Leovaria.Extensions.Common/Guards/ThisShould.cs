@@ -1,4 +1,4 @@
-﻿namespace Leovaria.Extensions.String.Guards
+﻿namespace Leovaria.Extensions.Common.Guards
 {
     /// <summary>
     /// Guards against typical things that occur.

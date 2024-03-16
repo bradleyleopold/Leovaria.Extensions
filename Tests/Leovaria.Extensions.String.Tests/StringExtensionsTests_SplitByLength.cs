@@ -1,4 +1,4 @@
-﻿namespace Leovaria.Extensions.String.Tests
+﻿namespace Leovaria.Extensions.StringExtensions.Tests
 {
     /// <summary>
     /// Tests for <see cref="StringExtensions.SplitByLength(string, int)"/>.
