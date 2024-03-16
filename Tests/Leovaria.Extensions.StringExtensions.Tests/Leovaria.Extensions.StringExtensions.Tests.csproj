@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Leovaria.Extensions.String\Leovaria.Extensions.StringExtensions.csproj" />
+    <ProjectReference Include="..\..\Leovaria.Extensions.StringExtensions\Leovaria.Extensions.StringExtensions.csproj" />
   </ItemGroup>
 
 </Project>
