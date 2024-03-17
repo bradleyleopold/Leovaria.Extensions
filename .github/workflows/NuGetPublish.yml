@@ -33,4 +33,4 @@ jobs:
     #- name: Publish To NuGet
     #  run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*${VERSION}.nupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json
     - name: Publish To GitHub
-      run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*${VERSION}.nupkg  --api-key NuGetPackageReleases --source https://nuget.pkg.github.com/bradleyleopold/index.json
+      run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*${VERSION}.nupkg  --api-key ${{ secrets.GITHUBAPIKEY }} --source https://nuget.pkg.github.com/bradleyleopold/index.json
