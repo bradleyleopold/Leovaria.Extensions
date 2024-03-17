@@ -25,9 +25,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore --c Release /p:Version=${VERSION}
+      run: dotnet build --no-restore -c Release /p:Version=${VERSION}
     - name: Test
-      run: dotnet test --no-build --verbosity normal --c Release /p:Version=${VERSION}
+      run: dotnet test --no-build --verbosity normal -c Release /p:Version=${VERSION}
     - name: Pack
       run: dotnet pack Leovaria.Extensions.DateOnlyExtensions/Leovaria.Extensions.DateOnlyExtensions.csproj -c Release /p:Version=${VERSION}
     - name: Publish 
