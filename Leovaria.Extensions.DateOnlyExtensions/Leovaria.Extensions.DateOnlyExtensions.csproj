@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Authors>Bradley Leopold</Authors>
+    <PackageId>Leovaria.Extensions.DateOnlyExtensions</PackageId>
     <PackageDescription>
       Package for extending the DateOnly struct capabilities in .NET. Adds a comprehensive
       amount of methods to the object to make working with complex date logic
