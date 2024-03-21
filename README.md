@@ -75,6 +75,9 @@ return date.AddWeeks(1); // Produces DateOnly instance of 03/08/2024.
 var date = new DateOnly(2024, 03, 01);
 return date.AddFortnights(1); // Produces DateOnly instance of 03/15/2024.
 ```
+
+For more examples view the test directory for this at: https://github.com/bradleyleopold/Leovaria.Extensions/tree/937bb03a8dd0ff93da6deb6c1f3ed35c1e383ee9/Tests/Leovaria.Extensions.DateOnlyExtensions.Tests
+
 ## String Extensions (Coming soon)
 
 More to come on this package soon.
