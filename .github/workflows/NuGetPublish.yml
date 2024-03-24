@@ -30,7 +30,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal -c Release /p:Version=${VERSION}
     - name: Pack
       run: dotnet pack Leovaria.Extensions.DateOnlyExtensions/Leovaria.Extensions.DateOnlyExtensions.csproj -c Release /p:Version=${VERSION}
-    - name: Publish To NuGet
-      run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*${VERSION}.nupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json
-    - name: Publish To GitHub
-      run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*${VERSION}.nupkg  --api-key ${{ secrets.GITHUBAPIKEY }} --source https://nuget.pkg.github.com/bradleyleopold/index.json
+    #- name: Publish To NuGet
+    #  run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*${VERSION}.nupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json
+    #- name: Publish To GitHub
+    #  run: dotnet nuget push Leovaria.Extensions.DateOnlyExtensions/bin/Release/*${VERSION}.nupkg  --api-key ${{ secrets.GITHUBAPIKEY }} --source https://nuget.pkg.github.com/bradleyleopold/index.json
