@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9179A9CF-B6E9-4378-BFAB-18695D5752A2}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{87B4D4F4-4DE7-412F-BC1E-04205DECC74A}"
@@ -21,6 +23,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leovaria.Extensions.DateOnlyExtensions", "Leovaria.Extensions.DateOnlyExtensions\Leovaria.Extensions.DateOnlyExtensions.csproj", "{7EC9A67F-3468-4B68-A19C-984592B9D5E8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leovaria.Extensions.DateOnlyExtensions.Tests", "Tests\Leovaria.Extensions.DateOnlyExtensions.Tests\Leovaria.Extensions.DateOnlyExtensions.Tests.csproj", "{E3D6807D-11F3-4419-8A98-9C8DF1EC07F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E21AF3CA-A845-4540-9D3C-9EC9BDC8194F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{A6AFF5F5-6A42-4BE7-AFB2-04B30F939E80}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\BuildAndTestAction.yml = .github\workflows\BuildAndTestAction.yml
+		.github\workflows\NuGetPublish.yml = .github\workflows\NuGetPublish.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +70,7 @@ Global
 		{63D991CF-DD99-44F9-B9DE-F8847E643125} = {87B4D4F4-4DE7-412F-BC1E-04205DECC74A}
 		{860F20D4-5132-4F4C-8F29-F6EFEC8A20B2} = {87B4D4F4-4DE7-412F-BC1E-04205DECC74A}
 		{E3D6807D-11F3-4419-8A98-9C8DF1EC07F1} = {87B4D4F4-4DE7-412F-BC1E-04205DECC74A}
+		{A6AFF5F5-6A42-4BE7-AFB2-04B30F939E80} = {E21AF3CA-A845-4540-9D3C-9EC9BDC8194F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30CF8CA9-C640-45E7-A5E4-BCED054CAF7B}
