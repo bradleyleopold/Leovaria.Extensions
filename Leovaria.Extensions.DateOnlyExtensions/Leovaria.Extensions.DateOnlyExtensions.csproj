@@ -12,6 +12,13 @@
       much easier.
     </PackageDescription>
     <RepositoryUrl>https://github.com/bradleyleopold/Leovaria.Extensions</RepositoryUrl>
+    <Copyright>Copyright (c) Bradley Leopold 2024</Copyright>
+    <PackageIcon>PackageIcon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="PackageIcon.png" Pack="true" PackagePath="" />
+    <None Include="README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
 </Project>
