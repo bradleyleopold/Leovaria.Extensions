@@ -11,14 +11,21 @@
       amount of methods to the object to make working with complex date logic
       much easier.
     </PackageDescription>
+    <PackageTags>dateonly, dates, extensions, datetime, date</PackageTags>
     <RepositoryUrl>https://github.com/bradleyleopold/Leovaria.Extensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <Copyright>Copyright (c) Bradley Leopold 2024</Copyright>
     <PackageIcon>PackageIcon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <!-- Include symbol files (*.pdb) in the built .nupkg -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="PackageIcon.png" Pack="true" PackagePath="" />
-    <None Include="README.md" Pack="true" PackagePath=""/>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="LICENSE.txt" Pack="true" PackagePath="" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
 </Project>
